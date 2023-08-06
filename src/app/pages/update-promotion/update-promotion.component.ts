@@ -39,6 +39,9 @@ export class UpdatePromotionComponent implements OnInit {
   selectedTab: string = 'participants';
   isVoteModified: boolean = false;
   currentRating = 3.5;
+  isEditingDescription = false;
+  newDescription = '';
+
   // newRating: number = 0;
   constructor(
     private promotionsService: PromotionsService,
@@ -58,15 +61,47 @@ export class UpdatePromotionComponent implements OnInit {
   onRatingChanged(rating: number) {
     this.currentRating = rating;
     this.isVoteModified = true;
+    
   }
+  
+  cancelUpdatedDescription() {
+    if (this.isEditingDescription) {
+      if (this.promotion.description !== this.newDescription) {
+        this.newDescription = this.promotion.description;
+        this.isEditingDescription = false;
+      } else {
+        this.isEditingDescription = false;
+      }
+    } else {
+      this.newDescription = this.promotion.description;
+      this.isEditingDescription = !this.isEditingDescription;
+    }
+  }
+
+  updateDescriptionInput() {
+    this.promotion.description = this.newDescription;
+    this.promotionsService.updateDescription(this.promotionId, this.newDescription, this.authorId);{
+      this.isEditingDescription = false;
+      this.promotion.description = this.newDescription;
+    };
+  }
+  startEditingDescription() {
+    this.isEditingDescription = true;
+    this.newDescription = this.promotion.description;
+}
+
+
+    
   saveVote() {
     if (this.currentRating >= 0 && this.currentRating <= 5) {
       this.promotionsService.addRating(this.promotionId, this.currentRating, this.authorId);
       this.isVoteModified = false;
-      this.currentRating = 0;
-
+      this.promotion.rating = this.currentRating;
+      
+      alert(`Vous avez évalué cette promotion à ${this.currentRating} étoiles`);
     }
-  } 
+  }
+      
   getSanitizedDescription(description: string): SafeHtml {
     const sanitizedDescription = this.removeMediaFromDescription(description);
     return this.sanitizer.bypassSecurityTrustHtml(sanitizedDescription);
@@ -78,7 +113,7 @@ export class UpdatePromotionComponent implements OnInit {
       this.promotionsService.getPromoById(this.promotionId).subscribe(
         (promotion) => {
           this.promotion = promotion;
-
+this.promotion.description=this.promotion.description.replace(/<img[^>]*>/g,"");
           this.authorId = this.promotion.authorId;
 
           this.userService.getUserName(this.authorId).subscribe((authorName: string) => {
@@ -105,6 +140,7 @@ export class UpdatePromotionComponent implements OnInit {
         }
       );
     });
+    
   }
   showTab(tab: string): void {
     this.selectedTab = tab;
@@ -169,26 +205,30 @@ export class UpdatePromotionComponent implements OnInit {
   }
 
   addParticipants(): void {
-    //TODO revoir ici suppression user
-    // const newPromotionId = this.promotionsService.getCreatedPromotionId();
-
     this.promotionsService.addParticipantsToPromotion(this.promotionId, this.addUsers).subscribe(
       (response) => {
         this.addUsers.forEach((userId) => {
           const userData = { promotionId: this.promotionId };
           this.userService.updateUserById(userId, userData).subscribe();
         });
-        console.log(this.addUsers);
-
-        // this.addUsers=[]
-        //         this.addUsers.push(this.promotion.participantsIds);
+  
+        // Mettez à jour la liste participantsMap après l'ajout
+        this.addUsers.forEach((userId) => {
+          this.promotionsService.getParticipantName(userId).subscribe((participant: Participant) => {
+            this.participantsMap.push(participant);
+          });
+        });
+  
+        // Effacez la liste addUsers après l'ajout
+        this.addUsers = [];
+  
       },
       (error) => {
         console.error('Failed to add participants to promotion:', error);
       }
     );
   }
-
+  
   deleteParticipantFromPromotion(selectedParticipantId: string, authorId: string): void {
     this.promotionsService.getParticipantId(selectedParticipantId).subscribe((participant) => {
       if (!participant) {
@@ -196,14 +236,20 @@ export class UpdatePromotionComponent implements OnInit {
         return;
       }
     });
-
-    this.promotionsService
-      .deleteParticipantById(this.promotionId, selectedParticipantId, authorId)
-      .subscribe((promotion) => {
+  
+    this.promotionsService.deleteParticipantById(this.promotionId, selectedParticipantId, authorId).subscribe(
+      (promotion) => {
         console.info('Promotion after delete:', promotion);
-      });
+  
+        // Mettez à jour la liste participantsMap après la suppression
+        this.participantsMap = this.participantsMap.filter((participant: Participant) => participant.id !== selectedParticipantId);
+      },
+      (error) => {
+        console.error('Failed to delete participant from promotion:', error);
+      }
+    );
   }
-  getMediaUrlFromDescription(description: string): string | null {
+    getMediaUrlFromDescription(description: string): string | null {
     const parser = new DOMParser();
     const doc = parser.parseFromString(description, 'text/html');
     const imgElement = doc.querySelector('img');

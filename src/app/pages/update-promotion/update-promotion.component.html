@@ -1,13 +1,9 @@
 <div class="card">
     <div *ngIf="promotion" class="promotion-details">
-        <!-- TODO conversion etoile en float -->
-        <!-- <p>{{ promotion.rating }}</p> -->
         <div class="rating">
-            <app-star-rating
-                [totalStars]="5"
-                [rating]="3.5"
-                (ratingChanged)="onRatingChanged($event)"
-            ></app-star-rating>
+            <app-star-rating [totalStars]="5" [rating]="promotion.rating"
+                (ratingChanged)="onRatingChanged($event)"></app-star-rating>
+
 
             <button class="update-button" *ngIf="isVoteModified" (click)="saveVote()">Enregistrer le vote</button>
         </div>
@@ -17,6 +13,7 @@
   </div> -->
         <div class="image-container">
             <img [src]="getPromotionImageUrl()" alt="Promotion Image" />
+
         </div>
 
         <h2 class="promo-title">{{ promotion.name }}</h2>
@@ -31,19 +28,30 @@
             <p>Date de création: {{ formatDate(promotion.creationDate) }}</p>
         </div>
 
-        <div>
+        <!-- <div>
             <div class="description-text" [innerHTML]="getSanitizedDescription(promotion.description)"></div>
+          </div> -->
+          <div class="description-text">
+            <div *ngIf="!isEditingDescription">
+                <p [innerHTML]="getSanitizedDescription(promotion.description)"></p>
+                <button class="update-button" (click)="startEditingDescription()">Modifier</button>
+            </div>
+            <div *ngIf="isEditingDescription">
+                <textarea class="description" name="description" [(ngModel)]="newDescription"></textarea>
+                <div class="update-button" (click)="updateDescriptionInput()">Valider</div>
+                <div class="update-button" (click)="cancelUpdatedDescription()">Annuler</div>
+            </div>
         </div>
+                        
+
+
         <div class="delete">
             <button class="update-button" (click)="onDeletePromotion(promotionId)">Supprimer la Promotion</button>
         </div>
     </div>
     <div class="tabs">
-        <button
-            class="tabs-button"
-            [ngClass]="{ active: selectedTab === 'participants' }"
-            (click)="showTab('participants')"
-        >
+        <button class="tabs-button" [ngClass]="{ active: selectedTab === 'participants' }"
+            (click)="showTab('participants')">
             Participants
         </button>
         <button class="tabs-button" [ngClass]="{ active: selectedTab === 'resources' }" (click)="showTab('resources')">
@@ -60,27 +68,30 @@
                 <div *ngIf="selectedTab === 'resources'">
                     <p>Ressources:</p>
                     <ul>
-                        <li *ngFor="let resource of resources">{{ resource.link }} {{ resource.title }}</li>
+                        <li *ngFor="let resource of resources">
+                            <a href="{{ resource.link }}" target="_blank">{{ resource.title }}</a>
+                        </li>
                     </ul>
+
                 </div>
 
                 <div *ngIf="selectedTab === 'topics'">
                     <p>Discussions:</p>
                     <ul>
-                        <li *ngFor="let topic of topics">{{ topic.upvote }} {{ topic.title }}</li>
+                        <li *ngFor="let topic of topics">{{ topic.upvote }} {{ topic.title }} {{ topic.content }}</li>
+
                     </ul>
+
                 </div>
 
                 <div *ngIf="selectedTab === 'participants'">
                     <div>
                         <p>Participants:</p>
                         <ul>
-                            <li class="list" *ngFor="let participant of participantsMap">
+                            <li class="participantsList" *ngFor="let participant of participantsMap">
                                 {{ participant.firstname }} {{ participant.lastname }}
-                                <button
-                                    class="update-button"
-                                    (click)="deleteParticipantFromPromotion(participant.id, promotion.authorId)"
-                                >
+                                <button class="update-button"
+                                    (click)="deleteParticipantFromPromotion(participant.id, promotion.authorId)">
                                     Supprimer
                                 </button>
                             </li>
@@ -89,14 +100,11 @@
 
                     <h3>Ajouter des étudiants</h3>
 
-                    <input
-                        type="text"
-                        [(ngModel)]="searchTerm"
-                        (input)="searchParticipants()"
-                        placeholder="Search participants"
-                    />
+                    <input type="text" [(ngModel)]="searchTerm" (input)="searchParticipants()"
+                        placeholder="Search participants" />
                     <ul *ngIf="showDropdown" class="search-results">
-                        <li *ngFor="let participant of searchResults" (click)="selectUser(participant.id)">
+                        <li class="participantsList" *ngFor="let participant of searchResults"
+                            (click)="selectUser(participant.id)">
                             {{ participant.firstname }} {{ participant.lastname }}
                         </li>
                     </ul>
@@ -104,7 +112,7 @@
                     <div class="selected-participants">
                         <h4>Participants sélectionnés :</h4>
                         <ul>
-                            <li *ngFor="let participantId of addUsers">
+                            <li class="participantsList" *ngFor="let participantId of addUsers">
                                 {{ getParticipantName(participantId) }}
                             </li>
                         </ul>

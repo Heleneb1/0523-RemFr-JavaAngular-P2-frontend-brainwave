@@ -28,7 +28,7 @@ body {
     border: 1px solid #ccc;
 
     word-wrap: break-word;
-    text-transform: capitalize;
+    // text-transform: capitalize;
   }
 
   .rating {
@@ -60,12 +60,17 @@ body {
     flex-shrink: 0;
 
     p {
-      margin: 3rem;
-      text-transform: capitalize;
-      text-align: center;
+      margin-left: 2rem;
+    // text-transform: capitalize;
     }
   }
-
+.description{
+  width:90vw;
+  margin: 2rem;
+  height: 20rem;
+  background-color: var(--violet);
+  color: white;
+}
   h2 {
     margin-bottom: 10px;
   }
@@ -87,6 +92,10 @@ body {
     line-height: normal;
     margin: 1.5rem;
   }
+  ol{
+    color: #DFDFDF;
+
+  }
 
   ul {
     margin: 10px 0;
@@ -97,14 +106,15 @@ body {
     display: flex;
     align-items: center;
     margin-bottom: 5px;
-    justify-content: space-around;
-    color: var(--violet);
+    margin-left: 1rem;
+    
   }
 
   .list li {
-    color: var(--violet);
+    color: white;
+    display: flex;
+    justify-content: space-between;
   }
-
   li button {
     margin-left: 10px;
   }
@@ -219,6 +229,10 @@ body {
   padding: 1rem;
 }
 
+.participantsList {
+  display: flex;
+  justify-content: space-between;
+}
 
 
 
