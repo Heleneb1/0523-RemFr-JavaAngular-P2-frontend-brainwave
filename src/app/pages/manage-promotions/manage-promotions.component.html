@@ -7,24 +7,30 @@
 
 <div class="promotion-card-container">
   <div class="promotion-card" *ngFor="let promotion of promotionsData">
-    <p>note:{{ promotion.rating }}</p>
 
     <div class="promo-card">
       <div class="header-card">
-        <img [src]="getMediaUrlFromDescription(promotion.description)" alt="Promotion Image" />
+        <img src="{{ promotion.picture }}" />
       </div>
       <div class="body-card">
         <p>{{ promotion.name }}</p>
         <div class="promotion-detail-container">
+          <div class="footer">
+            <div>
+          <p>note:{{ promotion.rating }}</p>
+        </div>
+          <div>
           <a
             class="promotion-detail-button"
             [routerLink]="['/promotion', promotion.id]"
             (click)="selectPromotionById(promotion.id)"
           >
             <p>Details</p>
+            
             <img [src]="'assets/images/svg/right-arrow.svg'" alt="arrow" height="100" width="100" />
           </a>
-
+        </div>
+        </div>
           <ng-template #loader>
             <div class="loader-container" [@fadeInOut]>
               <p>Loading...</p>

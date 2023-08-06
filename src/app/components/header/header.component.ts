@@ -1,22 +1,30 @@
-import { Component, HostListener } from '@angular/core';
+import { Component, HostListener, OnInit } from '@angular/core';
 import { Router, NavigationEnd } from '@angular/router';
+import { AuthService } from 'src/app/services/auth/auth.service';
 
 @Component({
   selector: 'app-header',
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.scss'],
 })
-export class HeaderComponent {
+export class HeaderComponent implements OnInit {
   isMenuOpen = false;
 
-  constructor(private router: Router) {
+  constructor(private router: Router, private authservice : AuthService) {
     this.router.events.subscribe((event) => {
       if (event instanceof NavigationEnd) {
         this.closeMenu();
       }
     });
   }
-
+  ngOnInit(): void {
+  
+  }
+  logout() {
+    this.authservice.logout();
+    alert('Vous venez de vous dèconnecter avec succes')
+    this.router.navigate(['/'])
+  }
   toggleMenu() {
     this.isMenuOpen = !this.isMenuOpen;
   }

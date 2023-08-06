@@ -45,7 +45,19 @@ export class PromotionsService {
 
     return this.httpClient.get<Promotion[]>(this.promoDataUrl);
   }
+  updateDescription(promotionId: string, updatedDescription: string,  authorId: string) {
+    const url = environment.apiUrl + `/promotions/${promotionId}/users/${ authorId}`;
 
+     this.httpClient.put<any>(url, { description: updatedDescription }).subscribe(
+      updatedPromotion => {
+        console.log('Promotion mise à jour avec le vote :', updatedPromotion);
+      },
+      error => {
+        console.error('Erreur lors de la mise à jour de la promotion :', error);
+      }
+    );
+  };
+  
   getParticipantName(participantId: string): Observable<Participant> {
     return this.userService.getUserById(participantId).pipe(
       map((user: any) => {
@@ -58,6 +70,11 @@ export class PromotionsService {
       })
     );
   }
+  getTopicReplies(topicId: string, answerId: string): Observable<any[]> {
+    const url = `${environment.apiUrl}/${answerId}/topics/${topicId}`;
+    return this.httpClient.get<any[]>(url);
+  }
+
   getParticipantId(participantId: string): Observable<any> {
     return this.userService.getUserById(participantId);
   }
@@ -78,8 +95,8 @@ export class PromotionsService {
     return this.httpClient.put(url, { participants: participantIds });
   }
   addRating(promotionId: string, userRating: number, authorId: string) {
-    const url =  environment.apiUrl + `/promotions/${promotionId}/users/${authorId}`;
-  
+    const url = environment.apiUrl + `/promotions/${promotionId}/users/${authorId}`;
+
     this.httpClient.put<any>(url, { rating: userRating }).subscribe(
       updatedPromotion => {
         console.log('Promotion mise à jour avec le vote :', updatedPromotion);

@@ -1,5 +1,14 @@
-<div class="star-rating">
+<!-- <div class="star-rating">
     <span *ngFor="let star of stars" class="star" (click)="rate(star)">
       <i class="fa" [ngClass]="star <= rating ? 'fa-star' : 'fa-star-o'"></i>
+  </span>
+</div>
+<div *ngIf="isVoteModified" class="rating-info">
+  Your rating: {{votedRating }}
+</div> -->
+
+ <div class="star-rating">
+  <span *ngFor="let star of stars" class="star" (click)="rate(star)">
+    <i class="fa" [ngClass]="getStarClass(star)"></i>
   </span>
 </div>
