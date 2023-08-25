@@ -6,27 +6,27 @@ import jwtDecode from 'jwt-decode';
 import { environment } from 'src/environments/environment.development';
 
 @Injectable({
-  providedIn: 'root',
+    providedIn: 'root',
 })
 export class AuthService {
-  constructor(private http: HttpClient, private cookieService: CookieService) {}
-  logout() {
-    this.cookieService.delete('token');
-  }
+    constructor(private http: HttpClient, private cookieService: CookieService) {}
+    logout() {
+        this.cookieService.delete('token');
+    }
 
-  isLoggedIn() {
-    return this.cookieService.check('token');
-  }
+    isLoggedIn() {
+        return this.cookieService.check('token');
+    }
 
-  getUserToken(): string | null {
-    const token = this.cookieService.get('token');
-    const payload: any = jwtDecode(token);
-    return payload?.userId;
-  }
+    getUserToken(): string | null {
+        const token = this.cookieService.get('token');
+        const payload: any = jwtDecode(token);
+        return payload?.userId;
+    }
 
-  getUserConnected(): Observable<string> {
-    const userId = this.getUserToken();
-    const userConnectedUrl = environment.apiUrl + `/users/${userId}`;
-    return this.http.get<string>(userConnectedUrl);
-  }
+    getUserConnected(): Observable<string> {
+        const userId = this.getUserToken();
+        const userConnectedUrl = environment.apiUrl + `/users/${userId}`;
+        return this.http.get<string>(userConnectedUrl);
+    }
 }

@@ -10,12 +10,12 @@
             <div class="nav-mobile">
                 <ul>
                     <li><a routerLink="/">Accueil</a></li>
-                    <li><a routerLink="/promotions">Promos</a></li>
+                    <li><a routerLink="/promotions">Promotions</a></li>
                     <li><a routerLink="/">Forum</a></li>
                     <li><a routerLink="/dashboard">Dashboard</a></li>
                     <li><a routerLink="/contact">Contact</a></li>
-                    <li><a routerLink="/authentication">Connexion</a></li>
-                    <a (click)="logout()">Se déconnecter</a>
+                    <li *ngIf="!loggedIn()"><a routerLink="/authentication">Connexion</a></li>
+                    <li *ngIf="loggedIn()"><a (click)="logout()">Déconnexion</a></li>
                     <img src="assets/images/Brain.png" alt="Image 2" class="menu-image" />
                 </ul>
             </div>

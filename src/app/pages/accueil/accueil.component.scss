@@ -1,58 +1,58 @@
 /* Styles pour les écrans mobiles */
 .background-image {
-  position: relative;
-  background-position: top;
-  width: 100%;
-  height: auto;
-  display: flex;
-  justify-content: center;
-  align-items: flex-start;
+    position: relative;
+    background-position: top;
+    width: 100%;
+    height: auto;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
 }
 
 .background-image img {
-  width: 100%;
-  max-height: 100%;
+    width: 100%;
+    max-height: 100%;
 }
 
 .search-bar {
-  position: absolute;
-  bottom: 0;
-  left: 50%;
-  transform: translateX(-50%);
-  text-align: center;
-  color: white;
-  padding: 20px;
-  border-radius: 10px;
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    text-align: center;
+    color: white;
+    padding: 20px;
+    border-radius: 10px;
 }
 
 h1 {
-  font-size: 40px;
-  margin-bottom: 10px;
-  -webkit-text-stroke: 0.5px #6f42c1;
+    font-size: 40px;
+    margin-bottom: 10px;
+    -webkit-text-stroke: 0.5px #6f42c1;
 }
 
 input[type='text'] {
-  width: 300px;
-  padding: 10px;
-  font-size: 16px;
-  border: none;
-  border-radius: 50px;
-  box-shadow: 0 0 0 2px #6f42c1;
+    width: 300px;
+    padding: 10px;
+    font-size: 16px;
+    border: none;
+    border-radius: 50px;
+    box-shadow: 0 0 0 2px #6f42c1;
 }
 
 .filter-button {
-  background-color: #6f42c1;
-  color: white;
-  margin: 20px 0px 0px 20px;
-  padding: 10px 20px;
-  font-size: 16px;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
+    background-color: #6f42c1;
+    color: white;
+    margin: 20px 0px 0px 20px;
+    padding: 10px 20px;
+    font-size: 16px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
 }
-.all{
-  display: flex;
- justify-content: center;
+.all {
+    display: flex;
+    justify-content: center;
 }
 // ---------------------------- carte  ----------------------------
 // .promotions-container {
@@ -63,135 +63,134 @@ input[type='text'] {
 //   width: 100%;
 //   margin-top: 10px;
 //   margin-bottom: 10px;
-  
+
 // }
 
-
 .promotions-container {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr); /* Affiche les cartes en 3 colonnes égales */
-  gap: 20px; /* Espace entre les cartes */
+    display: grid;
+    grid-template-columns: repeat(3, 1fr); /* Affiche les cartes en 3 colonnes égales */
+    gap: 20px; /* Espace entre les cartes */
 }
 .promo-card {
-  width: 300px;
-  height: 260px;
-  margin: 20px;
-  box-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
-
-  .header-card {
-    img {
-      width: 100%;
-      height: 150px;
-      border-radius: 5px;
-      border: 0.3px solid black;
-      box-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
-    }
-  }
-
-  .body-card {
-    background-color: (var(--violet));
-    color: white;
-    padding: 10px 0;
-    height: 40%;
-    width: 100%;
-    margin-top: -8px;
-    border-radius: 0 0 5px 5px;
-    border: 0.3px solid black;
+    width: 300px;
+    height: 260px;
+    margin: 20px;
     box-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
 
-    .promotion-detail-container {
-      display: flex;
-      justify-content: flex-end;
+    .header-card {
+        img {
+            width: 100%;
+            height: 150px;
+            border-radius: 5px;
+            border: 0.3px solid black;
+            box-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
+        }
+    }
 
-      a {
-        text-decoration: none;
+    .body-card {
+        background-color: (var(--violet));
         color: white;
-      }
-
-      .promotion-detail-button {
-        width: 30%;
+        padding: 10px 0;
+        height: 40%;
+        width: 100%;
+        margin-top: -8px;
+        border-radius: 0 0 5px 5px;
+        border: 0.3px solid black;
+        box-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
         display: flex;
-        justify-content: space-evenly;
-        cursor: pointer;
-        margin-right: 10px;
+        flex-direction: column;
+        justify-content: space-between;
+
+        .promotion-detail-container {
+            display: flex;
+            justify-content: flex-end;
+
+            a {
+                text-decoration: none;
+                color: white;
+            }
+
+            .promotion-detail-button {
+                width: 30%;
+                display: flex;
+                justify-content: space-evenly;
+                cursor: pointer;
+                margin-right: 10px;
+
+                p {
+                    text-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
+                }
+
+                img {
+                    width: 20px;
+                    height: 20px;
+                    align-items: center;
+                    vertical-align: middle;
+                }
+            }
+        }
 
         p {
-          text-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
+            margin: 0;
+            font-size: 16px;
+            font-family: 'Montserrat', sans-serif;
+            text-align: center;
         }
-
-        img {
-          width: 20px;
-          height: 20px;
-          align-items: center;
-          vertical-align: middle;
-        }
-      }
     }
-
-    p {
-      margin: 0;
-      font-size: 16px;
-      font-family: 'Montserrat', sans-serif;
-      text-align: center;
-    }
-  }
 }
 
 /* Styles pour les écrans desktop */
 @media (min-width: 768px) {
-  .background-image {
-    height: 150vh;
-  }
-
-  .background-image img {
-    max-height: 100%;
-  }
-
-  .search-bar {
-    top: 60%;
-    width: 80%;
-    padding: 30px;
-  }
-
-  h1 {
-    font-size: 36px;
-    margin-bottom: 20px;
-  }
-
-  input[type='text'] {
-    width: 100%;
-    font-size: 20px;
-  }
-
-  .filter-button {
-    margin-top: 40px;
-  }
-
-  // ---------------------------- carte  ----------------------------
-
-  .promotions-participated-container {
-    margin-top: 100px;
-  }
-  .header-promotions {
-    width: 90%;
-  }
-  .button-join-promotion {
-    font-size: 14px;
-    width: 100px;
-  }
-  .title {
-    font-size: 16px;
-  }
-
-  .show-more {
-    width: 90%;
-    font-size: 16px;
-
-    p {
-      width: 80px;
+    .background-image {
+        height: 150vh;
     }
-  }
+
+    .background-image img {
+        max-height: 100%;
+    }
+
+    .search-bar {
+        top: 60%;
+        width: 80%;
+        padding: 30px;
+    }
+
+    h1 {
+        font-size: 36px;
+        margin-bottom: 20px;
+    }
+
+    input[type='text'] {
+        width: 100%;
+        font-size: 20px;
+    }
+
+    .filter-button {
+        margin-top: 40px;
+    }
+
+    // ---------------------------- carte  ----------------------------
+
+    .promotions-participated-container {
+        margin-top: 100px;
+    }
+    .header-promotions {
+        width: 90%;
+    }
+    .button-join-promotion {
+        font-size: 14px;
+        width: 100px;
+    }
+    .title {
+        font-size: 16px;
+    }
+
+    .show-more {
+        width: 90%;
+        font-size: 16px;
+
+        p {
+            width: 80px;
+        }
+    }
 }

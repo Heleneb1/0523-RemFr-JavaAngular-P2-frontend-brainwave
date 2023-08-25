@@ -21,6 +21,7 @@ export class CreatePromotionsComponent implements AfterViewInit, OnInit {
     quill!: Quill;
     textValue: string;
     description: string;
+    defaultPicture = 'assets/images/logo.svg';
     picture: string;
     tag: string;
     type: string;
@@ -94,7 +95,7 @@ export class CreatePromotionsComponent implements AfterViewInit, OnInit {
         const data = {
             description: descriptionText,
             name: this.textValue,
-            picture: this.picture,
+            picture: this.picture || this.defaultPicture,
             tag: this.tag,
             type: this.type,
             difficulty: this.difficulty,
